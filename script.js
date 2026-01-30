@@ -32,3 +32,25 @@ const observer = new IntersectionObserver(
 );
 
 sections.forEach((section) => observer.observe(section));
+
+const themeToggle = document.querySelector(".theme-toggle");
+const themeIcon = document.querySelector(".theme-icon");
+const storedTheme = localStorage.getItem("slw-theme");
+
+const applyTheme = (theme) => {
+  document.body.setAttribute("data-theme", theme);
+  if (themeIcon) {
+    themeIcon.textContent = theme === "dark" ? "☀" : "☾";
+  }
+};
+
+if (storedTheme) {
+  applyTheme(storedTheme);
+}
+
+themeToggle?.addEventListener("click", () => {
+  const isDark = document.body.getAttribute("data-theme") === "dark";
+  const nextTheme = isDark ? "light" : "dark";
+  applyTheme(nextTheme);
+  localStorage.setItem("slw-theme", nextTheme);
+});
